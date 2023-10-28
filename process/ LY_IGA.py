@@ -292,6 +292,9 @@ def IGA(func, cxpb, mutpb, ngen, popsize, up, low):
     iga.run()
     print('gbest', iga.gbest)
     plt.plot(iga.gbest)
+    plt.xlabel("Count")
+    plt.ylabel("Mess")
+    plt.title("IGA_Optimize")
     plt.show()
 
 
@@ -305,4 +308,4 @@ if __name__ == "__main__":
     # print(iga.gbest)
     # plt.plot(iga.gbest)
     # plt.show()
-    IGA(func=evaluate, cxpb=0.8, mutpb=0.1, ngen=500, popsize=20, up=[30, 30, 30, 30], low=[1, 1, 1, 1])
+    IGA(func=evaluate, cxpb=0.8, mutpb=0.1, ngen=1000, popsize=20, up=[30, 30, 30, 30], low=[1, 1, 1, 1])
