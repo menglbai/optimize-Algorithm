@@ -1,7 +1,7 @@
 import os
 import csv
 
-path = './dataset_qb/'
+path = 'dataset_qb/'
 for files in os.listdir(path):
     datas = []
     # 读取csv文件

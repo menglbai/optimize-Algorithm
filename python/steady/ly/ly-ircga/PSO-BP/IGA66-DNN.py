@@ -21,7 +21,7 @@ def processData():
     前8000训练 后2000测试，做规范化
     :return:
     '''
-    path = "./dataset/dncj_lxb_10000.csv"  # 存放文件路径
+    path = "dataset/dncj_lxb_10000.csv"  # 存放文件路径
     df = pd.read_csv(path, header=None)  # 读取文件
     target = df.iloc[:, -1]
     # data = df.iloc[:, 0:-1]

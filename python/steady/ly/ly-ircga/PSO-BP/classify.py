@@ -40,7 +40,7 @@ def plot_test_data(y_test, y_hat):
 
 # 数据预处理
 def processData():
-    path = "./dataset/classify.csv"  # 存放文件路径
+    path = "dataset/classify.csv"  # 存放文件路径
     df = pd.read_csv(path)  # 读取文件
     target = df.iloc[:, -1]
     data = df.iloc[:, 0:-1]

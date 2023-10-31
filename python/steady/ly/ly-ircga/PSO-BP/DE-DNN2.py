@@ -17,7 +17,7 @@ import numpy as np
 '''
 # 数据预处理
 def processData():
-    path = "./dataset/qb_lxb_balance_10000.csv"  # 存放文件路径
+    path = "dataset/qb_lxb_balance_10000.csv"  # 存放文件路径
     # target = df.iloc[:, -1]
     # # data = df.iloc[:, 0:-1]
     # data = pd.concat([df.iloc[:, 0], df.iloc[:, 1], df.iloc[:, 2], df.iloc[:, 4], df.iloc[:, 11]], axis=1)

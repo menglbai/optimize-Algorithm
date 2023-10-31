@@ -25,6 +25,6 @@ if __name__ == '__main__':
 
 
 
-    f = open('./result.txt','r')
+    f = open('result.txt', 'r')
     f.write(str(pso.gbest_x))
     f.close()

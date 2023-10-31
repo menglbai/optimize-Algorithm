@@ -8,19 +8,16 @@ from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 import pandas as pd
-from sko.GA import GA
-import numpy as np
+
+
 
 
 '''
 使用侵爆弹
 '''
-count = 0
-
-
 # 数据预处理
 def processData():
-    path = "./dataset/qb_lxb_balance_10000.csv"  # 存放文件路径
+    path = "dataset/qb_lxb_balance_10000.csv"  # 存放文件路径
     # target = df.iloc[:, -1]
     # # data = df.iloc[:, 0:-1]
     # data = pd.concat([df.iloc[:, 0], df.iloc[:, 1], df.iloc[:, 2], df.iloc[:, 4], df.iloc[:, 11]], axis=1)
@@ -38,7 +35,6 @@ def processData():
     print(y_train.shape)
     return x_train, x_test, y_train, y_test
 
-
 # 适应度函数采用测试集合mae
 def demo_func(x):
     n1, n2, n3, a1, a2, a3, d1 = x
@@ -51,20 +47,11 @@ if __name__ == '__main__':
     x_train, x_test, y_train, y_test = processData()
     print('x_train', x_train)
     print('x_test', x_test)
-    # 将w的精度precision设置为1（即为整数），将
-    # 变异因子prop_mut设置为0.1
-    # 精度 precision，每个变量的精度，取值1 代表整数
-    ga = GA(func=demo_func, n_dim=7, size_pop=20, max_iter=50, prob_mut=0.1,
-            lb=[10, 5, 2, 0, 0, 0, 0.01], ub=[20, 15, 8, 5, 5, 5, 0.95], precision=1)
-    best_x, best_y = ga.run()
-    print('best_x:', best_x, '\n', 'best_y:', best_y)
-    print(ga.generation_best_Y)
-
-    Y_history = pd.DataFrame(ga.all_history_Y)
-    fig, ax = plt.subplots(2, 1)
-    ax[0].plot(Y_history.index, Y_history.values, '.', color='red')
-    Y_history.min(axis=1).cummin().plot(kind='line')
+    pso = PSO(func=demo_func, n_dim=7, pop=20, max_iter=50, lb=[10, 5, 2, 0, 0, 0, 0.01],
+              ub=[20, 15, 8, 5, 5, 5, 0.95], w=0.8, c1=0.5, c2=0.5)
+    pso.run()
+    print('best_x is ', pso.gbest_x, 'best_y is', pso.gbest_y)
+    print('pso.gbest_y_hist: ', pso.gbest_y_hist)
+    print('pso.gbest_y_hist: ', list(pso.gbest_y_hist))
+    plt.plot(pso.gbest_y_hist)
     plt.show()
-
-    print('gbest: ', np.array(Y_history.min(axis=1).cummin()))
-    print('gbest: ', list(Y_history.min(axis=1).cummin()))

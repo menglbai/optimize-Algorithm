@@ -11,7 +11,7 @@ import pandas as pd
 from sko.GA import GA
 import numpy as np
 
-path = "./dataset/qb_lxb_100000.csv"  # 存放文件路径
+path = "dataset/qb_lxb_100000.csv"  # 存放文件路径
 
 df = pd.read_csv(path)
 

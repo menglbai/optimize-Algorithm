@@ -11,28 +11,29 @@ import pandas as pd
 from iga.IGA import IGA
 import numpy as np
 import time
+
 count = 0
 
 
 # 数据预处理
 def processData():
-    path = "./dataset/qb_lxb_balance_10000.csv"  # 存放文件路径
-    # target = df.iloc[:, -1]
-    # # data = df.iloc[:, 0:-1]
-    # data = pd.concat([df.iloc[:, 0], df.iloc[:, 1], df.iloc[:, 2], df.iloc[:, 4], df.iloc[:, 11]], axis=1)
-
-    df = pd.read_csv(path)
-    data = df[['ammoQuantity', 'liningPlateThick', 'outerHeight', 'outerSideLength', 'wallThick']]
-    target = df['collapse']
+    '''
+    前8000训练 后2000测试，做规范化
+    :return:
+    '''
+    path = "dataset/dncj_lxb_10000.csv"  # 存放文件路径
+    df = pd.read_csv(path, header=None)  # 读取文件
+    target = df.iloc[:, -1]
+    # data = df.iloc[:, 0:-1]
+    data = pd.concat([df.iloc[:, 0], df.iloc[:, 1], df.iloc[:, 2], df.iloc[:, 4], df.iloc[:, 11]], axis=1)
     # python归一化函数MinMaxScaler的理解：对x归一化
-    # scaler = MinMaxScaler().fit(data)
+    scaler = MinMaxScaler().fit(data)
     x_train, x_test, y_train, y_test = train_test_split(data, target, test_size=0.2, shuffle=False)
     # 变换后各维特征有0均值，单位方差。也叫z-score规范化(零均值规范化)。
     # 计算方式是将特征值减去均值，除以标准差。 scaler.transform(X_train)
-    # x_train, x_test = scaler.transform(x_train), scaler.transform(x_test)
-    print(x_train.shape)
-    print(y_train.shape)
+    x_train, x_test = scaler.transform(x_train), scaler.transform(x_test)
     return x_train, x_test, y_train, y_test
+
 
 # 适应度函数采用测试集合mae
 def demo_func(x):
@@ -52,8 +53,8 @@ if __name__ == '__main__':
 
     # 记录开始时间
     starttime = time.time()
-
-    IGA(func=demo_func, cxpb=0.8, mutpb=0.1, ngen=50, popsize=20, up=[20, 15, 8, 5, 5, 5, 0.95], low=[10, 5, 2, 0, 0, 0, 0.01])
+    IGA(func=demo_func, cxpb=0.8, mutpb=0.1, ngen=10, popsize=20, up=[21, 16, 9, 5, 5, 5, 0.95],
+        low=[10, 5, 2, 0, 0, 0, 0.01])
     # ga = GA(func=demo_func, n_dim=7, size_pop=20, max_iter=50, prob_mut=0.1,
     #         lb=[10, 5, 2, 0, 0, 0, 0.01], ub=[20, 15, 8, 5, 5, 5, 0.95], precision=1)
     # 记录结束时间
